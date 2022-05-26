@@ -80,9 +80,9 @@ namespace TheatricalPlayersRefactoringKata
         public static int CalculateForHistoryGender(int currentAmount, int audience)
         {
             if(audience > 30) {
-                currentAmount += (currentAmount * 35) + 480;
+                currentAmount = ((currentAmount * 35) + (audience + 9) * 100) / 10;
             } else {
-                currentAmount += (currentAmount * audience) + 6000;
+                currentAmount = (currentAmount * audience/10) + 6000;
             }
             return currentAmount;
         }
