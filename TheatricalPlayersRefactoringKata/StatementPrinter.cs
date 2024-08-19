@@ -60,9 +60,9 @@ public class StatementPrinter
         foreach( CalculatedPerformance calcPerform in performances)
         {
 
-            result += String.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", calcPerform.PlayName, Convert.ToDecimal((decimal)calcPerform.Amount/ 100), calcPerform.Seats);
+            result += String.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", calcPerform.PlayName, calcPerform.AmountMoney, calcPerform.Seats);
         }
-        result += String.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal((decimal)calculation.TotalAmount / 100));
+        result += String.Format(cultureInfo, "Amount owed is {0:C}\n", calculation.TotalAmountMoney);
         result += String.Format("You earned {0} credits\n", calculation.TotalCredits);
         return result;
     }

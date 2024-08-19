@@ -14,21 +14,24 @@ namespace TheatricalPlayersRefactoringKata
     public class CalculatedPerformance
     {
         private int amount;
+        private decimal amountMoney;
         private int seats;
         private int credits;
         private string playName;
 
         public int Amount { get => amount; set => amount = value; }
+        public decimal AmountMoney { get => amountMoney; set => amountMoney = value; }
         public int Seats { get => seats; set => seats = value; }
         public int Credits { get => credits; set => credits = value; }
         public string PlayName { get => playName; set => playName = value; }
 
-        public CalculatedPerformance(int amount, string playName, int seats, int credits)
+        public CalculatedPerformance(int amount, string playName, int seats, int credits, decimal amountMoney)
         {
             this.amount = amount;
             this.playName = playName;
             this.seats = seats;
             this.credits = credits;
+            this.amountMoney = amountMoney;
         }
 
     }
@@ -42,9 +45,12 @@ namespace TheatricalPlayersRefactoringKata
         public List<CalculatedPerformance> CalculatedPerformances { get => _calculatedPerformances; set => _calculatedPerformances = value; }
         public int TotalAmount { get => _totalAmount; set => _totalAmount = value; }
         public int TotalCredits { get => _totalCredits; set => _totalCredits = value; }
-
+        public decimal TotalAmountMoney { get => totalAmountMoney; set => totalAmountMoney = value; }
         private int _totalCredits;
         private int _totalAmount;
+        private decimal totalAmountMoney;
+
+
         public InvoiceCalculation(Invoice invoice, Dictionary<string, Play> playMapper)
         {
             this._invoice = invoice;
@@ -97,7 +103,8 @@ namespace TheatricalPlayersRefactoringKata
 
             int volumeCredits = Math.Max(performance.Audience - 30, 0);
             if ("comedy" == currentPlay.Type) volumeCredits += (int)Math.Floor((decimal)performance.Audience / 5);
-            return new CalculatedPerformance(amount, currentPlay.Name, performance.Audience, volumeCredits);
+            decimal amountMoney = (decimal)amount / 100;
+            return new CalculatedPerformance(amount, currentPlay.Name, performance.Audience, volumeCredits, amountMoney);
         }
         public void CalculateInvoice()
         {
@@ -111,6 +118,8 @@ namespace TheatricalPlayersRefactoringKata
                 _calculatedPerformances.Add(totalPerformance);
                 _totalCredits += totalPerformance.Credits;
                 _totalAmount += totalPerformance.Amount;
+                totalAmountMoney += (decimal)_totalAmount /100;
+                
 
             }
         }
